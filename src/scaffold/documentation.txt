@@ -1,0 +1,2 @@
+So at the beginning I am writing my code with only one implementation in mind - a matrix with cells having values either 0 or 1. 
+Later I will create an abstraction for the board and the cell.
