@@ -7,7 +7,6 @@
 class Board
 {
 private:
-    std::vector<ICell *> board;
     int rows, cols;
 
     bool isInside(int, int) const;
@@ -16,6 +15,8 @@ private:
     void free();
 
 public:
+    std::vector<ICell *> board;
+
     Board() = delete;
     Board(std::vector<ICell *>, int, int);
     Board(const Board &);

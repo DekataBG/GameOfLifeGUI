@@ -120,11 +120,14 @@ bool Board::isInside(int row, int col) const
 
 void Board::copy(const Board &other)
 {
-    for (size_t i = 0; i < other.rows; i++)
+    if (other.board.size())
     {
-        for (size_t j = 0; j < other.cols; j++)
+        for (size_t i = 0; i < other.rows; i++)
         {
-            board.push_back(other.board[other.cols * i + j]);
+            for (size_t j = 0; j < other.cols; j++)
+            {
+                board.push_back(other.board[other.cols * i + j]);
+            }
         }
     }
 

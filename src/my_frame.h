@@ -4,20 +4,24 @@
 
 #include "my_app.h"
 #include "scaffold/game.h"
+#include "scaffold/board.h"
 #include <vector>
 
-class MyFrame : public wxFrame
+class MyFrame : public wxFrame, public Board
 {
 public:
     MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size, int width = 10, int height = 10);
 
-    int fieldWidth;
-    int fieldHeight;
-
-    std::vector<ICell *> cells; //
-    Game *game;                 //
+    Game *game;
 
 private:
+    wxButton *CreatePlayButton();
+    wxButton *CreateNextButton();
+    wxButton *CreateResetButton();
+
+    wxGridSizer *CreateGridSizer();
+    wxBoxSizer *CreateButtonSizer();
+
     void OnPlay(wxCommandEvent &event);
     void OnNext(wxCommandEvent &event);
     void OnNewGame(wxCommandEvent &event);

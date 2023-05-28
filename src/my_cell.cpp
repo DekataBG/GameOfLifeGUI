@@ -1,7 +1,7 @@
 #include "my_cell.h"
 
-MyCell::MyCell(wxWindow *parent, wxWindowID id, int row, int col)
-    : wxButton(parent, id), row(row), col(col) {}
+MyCell::MyCell(wxWindow *parent, int row, int col)
+    : wxButton(parent, wxID_ANY), row(row), col(col) {}
 
 int MyCell::getRow() const
 {
