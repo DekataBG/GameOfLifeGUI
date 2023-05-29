@@ -52,6 +52,11 @@ int Board::getCols() const
     return cols;
 }
 
+void Board::pushCell(ICell *cell)
+{
+    board.push_back(cell);
+}
+
 ICell *Board::getCell(int row, int col) const
 {
     if (isInside(row, col))

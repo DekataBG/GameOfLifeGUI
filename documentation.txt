@@ -1,0 +1,76 @@
+The project I was assigned to do was a game. I had to choose a game among some famous 20 century games and 
+I chose The Game of Life. Firstly I decided to create a Console application and if I have the time and energy I 
+would extend the game to Graphical User Interface(GUI). For this purpose I chose wxWidgets. 
+I started writing the scaffold of the project - an intercace ICell and classes board and game that work with it. 
+These classes contain the logic of the game, so later no matter what the used library is, they can be used. 
+Later when I started writing the GUI app, I used these classes. I haven't written any game logic in there, only 
+code for creating the buttons and events. Later when I finished the interface and implemented the classes I was 
+surprised that the game actually worked without writing any game-specific code in this project. That means the abstraction 
+was well made!
+
+I will first describe the base classes I have written, and then the ones inheriting from the wxWidgets objects: 
+
+The interface ICell 
+    - containing some methods I imagined would be used in everything that implements it. 
+    - getRow() and getCol() - returning their "imagined" row and column 
+    - setRow() and setCol() - setting their "imagined" row and column 
+    - getSelected() and setSelected() - selected is a cell that is alive
+    - getPreparedToSelect() and setPreparedToSelect() - preparedToSelect are cells which are going to live in the next round
+
+Cell 
+    - a class that is used only for the Console UI. Other than the implementation of the interface it has constructors
+
+Board 
+    - has constructors, destructor and operator=. Not all of these are necessary but I had to flex my skills :D
+    - std::vector<ICell *> vector containing all cells
+    - getRows() and getCols() - self explanatory
+    - pushCell(ICell *) - pushes a cell in the board vector
+    - *getCell(int, int), prepareCell(ICell *), unprepareCell(ICell *), selectCell(ICell *), 
+unselectCell(ICell *), isSelected(ICell *) - self explanatory
+    - print() prints the board - for some apps this method might be useless, but for console it is useful
+
+Game
+    - calculateCellNeighbors(ICell *) - calculates how many neighbor cells are alive
+    - manageCell(ICell *) - prepares cell to be made alive or dead
+    - managePreparedCell(ICell *) - makes the prepared cells alive or dead
+    - manageBoard() - calls manageCell() and managePreparedCell()
+    - playGame(int) - calls manageBoard() N times
+
+Now to describe the wxWidgets classes: 
+MyApp
+    - inherits wxApp 
+    - this class has a method OnInit() where the program starts
+    - here is decided how large the board and the size of the window should be 
+
+MyFrame
+    - this is the window that is running
+    - it inherits wxFrame and Board
+    - CreatePlayButton(), CreateNextButton(), CreateResetButton() - create the Play, Next and Reset button
+    - CreateGridSizer() and CreateButtonSizer() - create objects that contain the cells and the buttons
+    - OnPlay(wxCommandEvent &event), OnNext(wxCommandEvent &event), OnNewGame(wxCommandEvent &event), 
+OnCellClick(wxCommandEvent &event) - describe the behavior of the buttons and the cells
+    - OnPlay, OnNewGame and OnCellClick contain logic, that is specific to the interface, but 
+OnNext contains game-specific logic and it directly uses the Game class
+    - there is enum that helps with making IDs more recognisable and scalable in case of future change
+
+
+MyCell
+    - these are the cells that are colored and either survive or decided
+    - it inherits wxButton and ICell, so this is basically a button
+    - the implementation of the interface is pretty much the same as with Cell
+    - the difference is that now there is no explicit property "selected", rather whether a cell is selected 
+is determined by its color(yellow for selected and gray for not selected)
+
+
+The application can be extended by adding an option for the user to choose whether they want to use 
+the Console UI or the Graphical UI. 
+It can also be extended by adding an option for the user to decide how large the board should be, 
+while so far it can only be changed in the source code.
+
+Sources:
+1. https://www.justdevtutorials.com/post/wxwidgets-cmake/
+2. Cross-Platform GUI Programming with wxWidgets by Julian Smart and Kevin Hock
+3. https://www.youtube.com/watch?v=FOIbK4bJKS8
+4. https://en.wikipedia.org/wiki/CMake
+5. https://www.jetbrains.com/help/clion/cmakelists-txt-file.html
+6. https://stackoverflow.com/ (of course c:)

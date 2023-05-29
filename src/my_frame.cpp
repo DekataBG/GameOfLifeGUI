@@ -1,11 +1,12 @@
-#include "my_frame.h"
-#include "my_cell.h"
-#include "scaffold/board.h"
-
 #include <vector>
 
-MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size, int rows, int cols)
-    : wxFrame(NULL, wxID_ANY, title, pos, size), Board({}, rows, cols)
+#include "my_frame.h"
+#include "my_cell.h"
+
+#include "scaffold/game.h"
+
+MyFrame::MyFrame(const wxString &title, const wxSize &size, int rows, int cols)
+    : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size), Board({}, rows, cols)
 {
     wxGridSizer *gridSizer = CreateGridSizer();
 
@@ -16,8 +17,6 @@ MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size, 
     mainSizer->Add(buttonSizer, 0, wxALIGN_CENTER | wxBOTTOM, 10);
 
     this->SetSizer(mainSizer);
-
-    game = new Game(*this);
 }
 
 wxButton *MyFrame::CreatePlayButton()
@@ -59,7 +58,7 @@ wxGridSizer *MyFrame::CreateGridSizer()
             button->SetBackgroundColour(wxColour(192, 192, 192));
             button->Bind(wxEVT_BUTTON, &MyFrame::OnCellClick, this);
 
-            board.push_back(button);
+            pushCell(button);
 
             gridSizer->Add(button, 1, wxEXPAND | wxALL);
         }
@@ -91,7 +90,7 @@ void MyFrame::OnPlay(wxCommandEvent &event)
     {
         for (size_t j = 0; j < getCols(); j++)
         {
-            MyCell *cell = static_cast<MyCell *>(board[j * getRows() + i]);
+            MyCell *cell = static_cast<MyCell *>(getCell(i, j));
 
             cell->Enable(false);
         }
@@ -100,7 +99,8 @@ void MyFrame::OnPlay(wxCommandEvent &event)
 
 void MyFrame::OnNext(wxCommandEvent &event)
 {
-    game->manageBoard();
+    Game game(*this);
+    game.manageBoard();
 }
 
 void MyFrame::OnNewGame(wxCommandEvent &event)
@@ -112,10 +112,10 @@ void MyFrame::OnNewGame(wxCommandEvent &event)
     {
         for (size_t j = 0; j < getCols(); j++)
         {
-            MyCell *cell = static_cast<MyCell *>(board[j * getRows() + i]);
+            MyCell *cell = static_cast<MyCell *>(getCell(i, j));
 
             cell->Enable(true);
-            cell->setSelected(false); // Set gray color
+            unselectCell(cell); // Set gray color
         }
     }
 }
@@ -127,6 +127,4 @@ void MyFrame::OnCellClick(wxCommandEvent &event)
     cell->setSelected(!cell->getSelected());
 }
 
-wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
-    wxEND_EVENT_TABLE()
-        wxIMPLEMENT_APP(MyApp);
+wxIMPLEMENT_APP(MyApp);
