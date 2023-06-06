@@ -131,7 +131,7 @@ void Board::copy(const Board &other)
         {
             for (size_t j = 0; j < other.cols; j++)
             {
-                board.push_back(other.board[other.cols * i + j]);
+                board.push_back(other.board[other.cols * i + j]->clone());
             }
         }
     }
@@ -146,11 +146,7 @@ void Board::free()
     {
         for (size_t j = 0; j < cols; j++)
         {
-            if (board[cols * i + j] != NULL)
-            {
-                board[cols * i + j] = NULL;
-                delete board[cols * i + j];
-            }
+            delete board[cols * i + j];
         }
     }
 }

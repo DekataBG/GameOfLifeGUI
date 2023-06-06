@@ -99,8 +99,9 @@ void MyFrame::OnPlay(wxCommandEvent &event)
 
 void MyFrame::OnNext(wxCommandEvent &event)
 {
-    Game game(*this);
-    game.manageBoard();
+    // Game game(*this);
+    Game *game = Game::getInstance(*this);
+    game->manageBoard();
 }
 
 void MyFrame::OnNewGame(wxCommandEvent &event)

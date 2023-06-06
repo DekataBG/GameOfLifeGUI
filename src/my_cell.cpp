@@ -3,6 +3,16 @@
 MyCell::MyCell(wxWindow *parent, int row, int col)
     : wxButton(parent, wxID_ANY), row(row), col(col) {}
 
+ICell *MyCell::clone()
+{
+    MyCell *cell = new MyCell(m_parent, getRow(), getCol());
+
+    cell->setSelected(getSelected());
+    cell->setPreparedToSelect(getPreparedToSelect());
+
+    return cell;
+}
+
 int MyCell::getRow() const
 {
     return row;

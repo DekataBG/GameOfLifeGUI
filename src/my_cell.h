@@ -12,6 +12,8 @@ private:
 public:
     MyCell(wxWindow *parent, int row, int col);
 
+    ICell *clone() override;
+
     int getRow() const override;
     void setRow(int) override;
 

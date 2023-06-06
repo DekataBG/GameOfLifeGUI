@@ -12,6 +12,16 @@ Cell::Cell(Cell &&other)
     copy(other);
 }
 
+ICell *Cell::clone()
+{
+    Cell *cell = new Cell(getRow(), getCol());
+
+    cell->setSelected(getSelected());
+    cell->setPreparedToSelect(getPreparedToSelect());
+
+    return cell;
+}
+
 int Cell::getRow() const
 {
     return row;

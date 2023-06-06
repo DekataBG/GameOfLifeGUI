@@ -16,6 +16,8 @@ public:
     Cell(const Cell &);
     Cell(Cell &&);
 
+    ICell *clone() override;
+
     int getRow() const override;
     void setRow(int) override;
 

@@ -6,11 +6,21 @@
 class Game
 {
 private:
+    static Game *instance_ptr;
+
     Board board;
+    Game(const Board &);
 
 public:
+    Game(const Game &) = delete;
+    Game(Game &&) = delete;
+
+    Game &operator=(const Game &) = delete;
+    Game &operator=(Game &&) = delete;
+
+    static Game *getInstance(const Board &);
+
     Game() = delete;
-    Game(const Board &);
 
     int calculateCellNeighbors(ICell *);
 

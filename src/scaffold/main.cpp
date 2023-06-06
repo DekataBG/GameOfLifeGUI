@@ -24,9 +24,9 @@ int main()
     b.selectCell(b.getCell(2, 0));
     b.selectCell(b.getCell(1, 1));
 
-    Game game(b);
+    Game *game = Game::getInstance(b);
 
-    game.playGame(5);
+    game->playGame(5);
 
     return 0;
 }

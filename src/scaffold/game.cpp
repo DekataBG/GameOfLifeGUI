@@ -1,7 +1,19 @@
 #include "game.h"
 #include "board.h"
 
+Game *Game::instance_ptr = nullptr;
+
 Game::Game(const Board &board) : board(board) {}
+
+Game *Game::getInstance(const Board &board)
+{
+    if (Game::instance_ptr == nullptr)
+    {
+        Game::instance_ptr = new Game(board);
+    }
+
+    return instance_ptr;
+}
 
 int Game::calculateCellNeighbors(ICell *cell)
 {
