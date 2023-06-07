@@ -8,15 +8,9 @@ private:
     int row, col;
     bool selected = false, preparedToSelect = false;
 
-    void copy(const Cell &);
-
 public:
     Cell() = delete;
     Cell(int, int);
-    Cell(const Cell &);
-    Cell(Cell &&);
-
-    ICell *clone() override;
 
     int getRow() const override;
     void setRow(int) override;

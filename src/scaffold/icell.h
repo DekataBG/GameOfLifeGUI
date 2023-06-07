@@ -3,7 +3,7 @@
 class ICell
 {
 public:
-    virtual ICell *clone() = 0;
+    virtual ~ICell() {}
 
     virtual int getRow() const = 0;
     virtual void setRow(int) = 0;

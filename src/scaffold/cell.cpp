@@ -2,26 +2,6 @@
 
 Cell::Cell(int row, int col) : row(row), col(col) {}
 
-Cell::Cell(const Cell &other)
-{
-    copy(other);
-}
-
-Cell::Cell(Cell &&other)
-{
-    copy(other);
-}
-
-ICell *Cell::clone()
-{
-    Cell *cell = new Cell(getRow(), getCol());
-
-    cell->setSelected(getSelected());
-    cell->setPreparedToSelect(getPreparedToSelect());
-
-    return cell;
-}
-
 int Cell::getRow() const
 {
     return row;
@@ -60,13 +40,4 @@ bool Cell::getPreparedToSelect() const
 void Cell::setPreparedToSelect(bool flag)
 {
     preparedToSelect = flag;
-}
-
-void Cell::copy(const Cell &other)
-{
-    row = other.row;
-    col = other.col;
-
-    selected = other.selected;
-    preparedToSelect = other.preparedToSelect;
 }

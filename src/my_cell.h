@@ -10,9 +10,7 @@ private:
     bool preparedToSelect = false;
 
 public:
-    MyCell(wxWindow *parent, int row, int col);
-
-    ICell *clone() override;
+    MyCell(wxWindow *, int, int);
 
     int getRow() const override;
     void setRow(int) override;

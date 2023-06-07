@@ -12,6 +12,7 @@ private:
     Game(const Board &);
 
 public:
+    Game() = delete;
     Game(const Game &) = delete;
     Game(Game &&) = delete;
 
@@ -19,8 +20,6 @@ public:
     Game &operator=(Game &&) = delete;
 
     static Game *getInstance(const Board &);
-
-    Game() = delete;
 
     int calculateCellNeighbors(ICell *);
 
